@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/f2f3e69293.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+      .messenger {
+        padding: 10px;
+        height: 100vh;
+        box-sizing: border-box;
+        background: #f3f4fd;
+        grid-template-areas: 'chat-list chat';
+        display: grid;
+        grid-template-columns: 20% 80%;
+        grid-template-rows: auto;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        justify-items: stretch;
+        align-items: stretch;
+      }
+
+      .chat-list {
+        grid-area: chat-list;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: 10% 90%;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        justify-items: stretch;
+        align-items: stretch;
+      }
+      .chat-list__search-box {
+        border-bottom: 1px #d4d5de solid;
+        margin-bottom: 18px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+      }
+      .chat-list__search-box--input {
+        background: transparent;
+        border: none;
+        outline: none;
+        width: 100%;
+      }
+      ::placeholder {
+        color: #73757c;
+        font-size: 15px;
+      }
+      .chat-list__chats--chat {
+        background: white;
+        -webkit-box-shadow: 0px 0px 1px 1px rgba(240, 240, 240, 1);
+        -moz-box-shadow: 0px 0px 1px 1px rgba(240, 240, 240, 1);
+        box-shadow: 0px 0px 1px 1px rgba(240, 240, 240, 1);
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        height: 80px;
+        cursor: pointer;
+        padding: 0 25px;
+      }
+      .actual-chat {
+        background: #e9e8ed;
+      }
+      .chat-list__chats--chat--avatar {
+        border-radius: 50%;
+        margin-right: 15px;
+        width: 50px;
+        height: 50px;
+      }
+      .chat-list__chats--chat--name {
+        font-size: 16px;
+        color: #53555f;
+        font-weight: bold;
+      }
+
+      .chat {
+        grid-area: chat;
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: 10% 80% 10%;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        justify-items: stretch;
+        align-items: stretch;
+      }
+      .chat__header {
+        border-bottom: 1px #d4d5de solid;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        margin: 0 10px 18px 10px;
+        box-sizing: border-box;
+        color: #484d59;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .chat__messages-list {
+        display: flex;
+        box-sizing: border-box;
+        padding: 0 10px;
+        flex-direction: column;
+      }
+
+      .chat__messages-list--message {
+        border-radius: 25px;
+        margin-bottom: 10px;
+        margin-top: 0;
+        padding: 10px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      .recived-message {
+        background-color: #e9e8ed;
+        color: black;
+        align-self: flex-start;
+      }
+      .sent-message {
+        background-color: #2a8cf1;
+        color: white;
+        align-self: flex-end;
+      }
+      .chat__form {
+        position: fixed;
+        bottom: 0;
+        background: white;
+        -webkit-box-shadow: 0px 0px 1px 1px rgba(240, 240, 240, 1);
+        -moz-box-shadow: 0px 0px 1px 1px rgba(240, 240, 240, 1);
+        box-shadow: 0px 0px 1px 1px rgba(240, 240, 240, 1);
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        margin: 10px;
+        box-sizing: border-box;
+      }
+      .chat__form--input {
+        width: 95%;
+        border: none;
+        color: gray;
+        outline: none;
+        margin: 0 0 0 55px;
+      }
+      ::placeholder {
+        font-weight: bold;
+        color: #c8c8ca;
+        font-size: 15px;
+      }
+      .chat__form--button {
+        margin: 0px 15px;
+        display: inline-block;
+        font-size: 15px;
+        border-radius: 50%;
+        padding: 0.4em 0.5em;
+        cursor: pointer;
+        border: none;
+        color: white;
+        background: linear-gradient(to bottom, #7ab6f5, #2d8ced);
+        -webkit-box-shadow: 0px 39px 48px -5px rgba(53, 144, 238, 1);
+        -moz-box-shadow: 0px 39px 48px -5px rgba(53, 144, 238, 1);
+        box-shadow: 0px 39px 48px -5px rgba(53, 144, 238, 1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="messenger">
+      <div class="chat-list">
+        <div class="chat-list__search-box">
+          <input
+            placeholder="Search"
+            class="chat-list__search-box--input"
+            type="text"
+          />
+        </div>
+        <div class="chat-list__chats">
+          <div class="chat-list__chats--chat actual-chat">
+            <img
+              src="./assets/img/ava1.png"
+              alt="Profile Picture"
+              class="chat-list__chats--chat--avatar"
+            />
+            <p class="chat-list__chats--chat--name">Edward Phips</p>
+          </div>
+          <div class="chat-list__chats--chat">
+            <img
+              src="./assets/img/ava2.png"
+              alt="Profile Picture"
+              class="chat-list__chats--chat--avatar"
+            />
+            <p class="chat-list__chats--chat--name">Camilo Moreno</p>
+          </div>
+          <div class="chat-list__chats--chat">
+            <img
+              src="./assets/img/ava3.png"
+              alt="Profile Picture"
+              class="chat-list__chats--chat--avatar"
+            />
+            <p class="chat-list__chats--chat--name">Isabelle Keys</p>
+          </div>
+        </div>
+      </div>
+      <section class="chat">
+        <div class="chat__header">
+          Edward Phips
+        </div>
+        <div id="messages" class="chat__messages-list">
+          <p class="chat__messages-list--message recived-message">
+            Hey whats up, man.
+          </p>
+          <p class="chat__messages-list--message sent-message">
+            Hey, Ed, how is everything going?
+          </p>
+          <p class="chat__messages-list--message sent-message">
+            Did you travel to Miami last summer?
+          </p>
+          <p class="chat__messages-list--message recived-message">
+            Yeah, it was an epic summer, you won't believe what happened there.
+          </p>
+        </div>
+        <form id="chat__form" action="" class="chat__form">
+          <input
+            placeholder="Type a message..."
+            id="m"
+            type="text"
+            class="chat__form--input"
+          />
+          <div id="chat__form--button" class="chat__form--button">
+            <i class="far fa-paper-plane"></i>
+          </div>
+        </form>
+      </section>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+      const $form = document.getElementById('chat__form');
+      const $input = document.getElementById('m');
+      const $chat = document.getElementById('messages');
+      const $sendB = document.getElementById('chat__form--button');
+      const capturarMensaje = () => {
+        return $input.value;
+      };
+      const enviarMensaje = e => {
+        e.preventDefault();
+        const mensaje = capturarMensaje();
+        socket.emit('chat message', mensaje);
+        $input.value = '';
+      };
+
+      $sendB.addEventListener('click', enviarMensaje);
+      $input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          $sendB.click();
+        }
+      });
+      socket.on('chat message', function(msg) {
+        let child = document.createElement('p');
+        child.innerHTML = msg;
+        $chat.appendChild(child);
+      });
+    </script>
+  </body>
+</html>
